@@ -37,6 +37,10 @@ const List: React.FC<Props> = () => {
     setTasks((tasks) => tasks.filter((task) => !task.completed));
   };
 
+  const handleTaskDelete = (selectedTask: Task) => () => {
+    setTasks((tasks) => tasks.filter((task) => task.id !== selectedTask.id));
+  };
+
   return (
     <div>
       <div>
@@ -44,6 +48,7 @@ const List: React.FC<Props> = () => {
           <div key={task.id}>
             <input type='checkbox' checked={task.completed} onChange={handleCompletedTask(task)} />
             {task.label}
+            <button onClick={handleTaskDelete(task)}>Remover</button>
           </div>
         ))}
       </div>
