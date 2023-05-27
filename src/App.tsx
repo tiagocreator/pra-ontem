@@ -13,7 +13,18 @@ const isActiveStyle = {
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const TaskProps = { tasks, setTasks };
+  const updateTask = (taskId: string, completed: boolean) => {
+    setTasks((tasks) =>
+      tasks.map((taskElement) => {
+        if (taskElement.id === taskId) {
+          return { ...taskElement, completed };
+        }
+        return taskElement;
+      }),
+    );
+  };
+
+  const TasksApi = { tasks, setTasks, updateTask };
 
   return (
     <BrowserRouter>
@@ -28,8 +39,8 @@ function App() {
       </nav>
       <br />
       <Routes>
-        <Route path='/' element={<List {...TaskProps} />} />
-        <Route path='/focus-task' element={<Focus {...TaskProps} />} />
+        <Route path='/' element={<List {...TasksApi} />} />
+        <Route path='/focus-task' element={<Focus {...TasksApi} />} />
       </Routes>
     </BrowserRouter>
   );

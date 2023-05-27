@@ -5,7 +5,7 @@ import { Task, TaskProps } from '../types';
 
 type Props = TaskProps & {};
 
-const List: React.FC<Props> = ({ tasks, setTasks }) => {
+const List: React.FC<Props> = ({ tasks, setTasks, updateTask }) => {
   const [taskLabel, setTaskLabel] = useState('');
 
   const handleTaskLabel = (e: ChangeEvent<HTMLInputElement>) => setTaskLabel(e.target.value);
@@ -18,14 +18,7 @@ const List: React.FC<Props> = ({ tasks, setTasks }) => {
   };
 
   const handleCompletedTask = (selectedTask: Task) => (e: ChangeEvent<HTMLInputElement>) => {
-    setTasks((tasks) =>
-      tasks.map((taskElement) => {
-        if (taskElement.id === selectedTask.id) {
-          return { ...taskElement, completed: e.target.checked };
-        }
-        return taskElement;
-      }),
-    );
+    updateTask(selectedTask.id, e.target.checked);
   };
 
   const handleClearCompleted = () => {
