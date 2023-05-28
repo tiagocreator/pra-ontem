@@ -5,7 +5,10 @@ export type Task = {
 };
 
 export type TaskProps = {
+  addTask: (task: Pick<Task, 'label'>) => void;
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   updateTask: (taskId: string, completed: boolean) => void;
+  focusedTask?: Task;
+  nextFocusedTask: () => void;
 };
