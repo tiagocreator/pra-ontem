@@ -5,14 +5,14 @@ import { Task, TaskProps } from '../types';
 
 type Props = TaskProps & {};
 
-const List: React.FC<Props> = ({ tasks, setTasks, updateTask }) => {
+const List: React.FC<Props> = ({ tasks, setTasks, updateTask, addTask }) => {
   const [taskLabel, setTaskLabel] = useState('');
 
   const handleTaskLabel = (e: ChangeEvent<HTMLInputElement>) => setTaskLabel(e.target.value);
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && taskLabel.trim().length > 0) {
-      setTasks((tasks) => [...tasks, { label: taskLabel, id: nanoid(), completed: false }]);
+      addTask({ label: taskLabel });
       setTaskLabel('');
     }
   };

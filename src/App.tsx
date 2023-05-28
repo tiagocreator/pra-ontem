@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { shuffle } from 'lodash';
+import { nanoid } from 'nanoid';
 
 import List from './components/List';
 import Focus from './components/Focus';
@@ -12,6 +14,15 @@ const isActiveStyle = {
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [focusedTaskId, setFocusedTaskId] = useState<string | undefined>(undefined);
+
+  const addTask = (task: Pick<Task, 'label'>) => {
+    const id = nanoid();
+    setTasks((tasks) => [...tasks, { label: task.label, id, completed: false }]);
+    if (!focusedTaskId) {
+      setFocusedTaskId(id);
+    }
+  };
 
   const updateTask = (taskId: string, completed: boolean) => {
     setTasks((tasks) =>
@@ -24,7 +35,13 @@ function App() {
     );
   };
 
-  const TasksApi = { tasks, setTasks, updateTask };
+  const focusedTask = tasks.find((task) => task.id === focusedTaskId);
+
+  const nextFocusedTask = () => {
+    setFocusedTaskId(shuffle(tasks.filter((task) => !task.completed))[0]?.id);
+  };
+
+  const TasksApi = { tasks, setTasks, addTask, updateTask, focusedTask, nextFocusedTask };
 
   return (
     <BrowserRouter>
