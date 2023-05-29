@@ -1,11 +1,12 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { nanoid } from 'nanoid';
 
-import { Task, TaskProps } from '../types';
+import { Task } from '../types';
+import useTaskStore from '../hooks/taskStore';
 
-type Props = TaskProps & {};
+type Props = {};
 
-const List: React.FC<Props> = ({ tasks, setTasks, updateTask, addTask }) => {
+const List: React.FC<Props> = () => {
+  const { tasks, setTasks, updateTask, addTask } = useTaskStore();
   const [taskLabel, setTaskLabel] = useState('');
 
   const handleTaskLabel = (e: ChangeEvent<HTMLInputElement>) => setTaskLabel(e.target.value);

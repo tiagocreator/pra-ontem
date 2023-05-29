@@ -1,8 +1,10 @@
-import { TaskProps } from '../types';
+import useTaskStore from '../hooks/taskStore';
 
-type Props = TaskProps & {};
+type Props = {};
 
-const Focus: React.FC<Props> = ({ tasks, updateTask, focusedTask: task, nextFocusedTask }) => {
+const Focus: React.FC<Props> = () => {
+  const { updateTask, focusedTask: task, nextFocusedTask } = useTaskStore();
+
   const handleCompletedTask = () => {
     if (task) {
       updateTask(task.id, true);
