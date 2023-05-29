@@ -8,12 +8,14 @@ import Focus from './components/Focus';
 
 import { Task } from './types';
 
+import useLocalStorage from './hooks/storage';
+
 const isActiveStyle = {
   fontWeight: 'bold',
 };
 
 function App() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useLocalStorage<Task[]>('tasks', []);
   const [focusedTaskId, setFocusedTaskId] = useState<string | undefined>(undefined);
 
   const addTask = (task: Pick<Task, 'label'>) => {
