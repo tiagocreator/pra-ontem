@@ -3,6 +3,13 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { Task } from '../types';
 import useTaskStore from '../hooks/taskStore';
 
+import Checkbox from './CheckBox';
+
+import { Container, DeleteButton, ListContainer, ListItem, TaskInput } from '../styles/List';
+import { TextButton } from '../styles/Buttons';
+import Spacer from './Spacer';
+import DeleteIcon from '../icons/Delete';
+
 type Props = {};
 
 const List: React.FC<Props> = () => {
@@ -31,21 +38,29 @@ const List: React.FC<Props> = () => {
   };
 
   return (
-    <div>
-      <div>
+    <Container>
+      <ListContainer>
         {tasks.map((task) => (
-          <div key={task.id}>
-            <input type='checkbox' checked={task.completed} onChange={handleCompletedTask(task)} />
+          <ListItem key={task.id}>
+            <Checkbox
+              type='checkbox'
+              checked={task.completed}
+              onChange={handleCompletedTask(task)}
+            />
+            <Spacer width={24} />
             {task.label}
-            <button onClick={handleTaskDelete(task)}>Remover</button>
-          </div>
+            <Spacer flex={1} />
+            <DeleteButton onClick={handleTaskDelete(task)}>
+              <DeleteIcon />
+            </DeleteButton>
+          </ListItem>
         ))}
-      </div>
-      <input value={taskLabel} onChange={handleTaskLabel} onKeyDown={handleKeyPress} />
-      <div>
-        <button onClick={handleClearCompleted}>Remover Completas</button>
-      </div>
-    </div>
+      </ListContainer>
+      <Spacer height={30} />
+      <TaskInput value={taskLabel} onChange={handleTaskLabel} onKeyDown={handleKeyPress} />
+      <Spacer height={45} />
+      <TextButton onClick={handleClearCompleted}>Remover Completas</TextButton>
+    </Container>
   );
 };
 

@@ -1,4 +1,8 @@
 import useTaskStore from '../hooks/taskStore';
+import { Button, TextButton } from '../styles/Buttons';
+
+import { Container, FocusTask } from '../styles/Focus';
+import Spacer from './Spacer';
 
 type Props = {};
 
@@ -12,11 +16,12 @@ const Focus: React.FC<Props> = () => {
   };
 
   return task ? (
-    <div>
-      <p>{task.label}</p>
-      <button onClick={handleCompletedTask}>Completo</button>
-      <button onClick={nextFocusedTask}>Pŕoxima</button>
-    </div>
+    <Container>
+      <FocusTask>{task.label}</FocusTask>
+      <Button onClick={handleCompletedTask}>Completar</Button>
+      <Spacer height={45} />
+      <TextButton onClick={nextFocusedTask}>Pŕoxima</TextButton>
+    </Container>
   ) : (
     <p>Nenhuma tarefa incompleta.</p>
   );
